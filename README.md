@@ -31,3 +31,15 @@ chmod +x NVIDIA-Linux-x86_64-570.124.04.run
 ./NVIDIA-Linux-x86_64-570.124.04.run -x
 ### ⚠️ Ostrzeżenie
 Projekt jest w fazie eksperymentalnej. Używasz go na własną odpowiedzialność. Zawsze rób kopię zapasową systemu przed instalacją sterowników graficznych.
+Krok 3: Uruchomienie Marcel's Patcher
+Pobierz mój skrypt i "wstrzyknij" wsparcie dla swojej karty:
+
+Bash
+chmod +x patch_nvidia.sh
+sudo ./patch_nvidia.sh
+Krok 4: Instalacja sterownika
+Po poprawnym spatchowaniu, wejdź do folderu sterownika i uruchom instalator:
+
+Bash
+cd NVIDIA-Linux-x86_64-570.124.04
+sudo ./nvidia-installer
