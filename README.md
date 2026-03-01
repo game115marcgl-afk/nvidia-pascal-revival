@@ -22,6 +22,7 @@ Pierwsza wersja Alpha (v0.1)
 Instrukcja instalacji (Wersja BETA 0.1)
 [!CAUTION]
 ⚠️ UWAGA: To jest wersja eksperymentalna. Ryzyko czarnego ekranu (Tty only). Zawsze rób kopię zapasową (np. Timeshift) przed uruchomieniem skryptów!
+
 Krok 1: Przygotowanie systemu
 Najpierw sprawdź, czy Twój system posiada wszystkie zależności:
 code
@@ -52,6 +53,3 @@ code
 Bash
 cd NVIDIA-Linux-x86_64-570.124.04
 sudo ./nvidia-installer --no-cc-version-check
-⚠️ Ważne ostrzeżenie
-Pascal nie posiada procesora GSP. Po instalacji, jeśli system nie wstaje, upewnij się, że masz dodany parametr:
-options nvidia NVreg_EnableGpuFirmware=0 w /etc/modprobe.d/nvidia.conf.
