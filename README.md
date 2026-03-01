@@ -1,12 +1,12 @@
 
 
-# 🚀 NVIDIA PASCAL REVIVAL - INSTRUKCJA OBSŁUGI
+# NVIDIA PASCAL REVIVAL - INSTRUKCJA OBSŁUGI
 
 Ten projekt pozwala na zainstalowanie najnowszych sterowników NVIDIA (Seria 500+) na kartach graficznych **GTX z serii 10 (Pascal)**. Wszystko odbywa się automatycznie za pomocą jednego skryptu.
 
 ---
 
-## 🛠️ KROK 1: Przygotowanie i Pobranie
+## KROK 1: Przygotowanie i Pobranie
 Otwórz terminal na swoim pulpicie i wklej poniższe komendy, aby pobrać projekt:
 
 ```bash
@@ -17,7 +17,7 @@ chmod +x build_pascal_driver.sh
 
 ---
 
-## 🏗️ KROK 2: Budowanie Twojego Sterownika
+##  KROK 2: Budowanie Twojego Sterownika
 Teraz uruchomimy kreatora, który wykryje Twoją kartę, pobierze sterownik od Nvidii i "wstrzyknie" do niego wsparcie dla Pascala oraz optymalizacje wydajności.
 
 **Uruchom to polecenie:**
@@ -28,7 +28,7 @@ sudo ./build_pascal_driver.sh
 
 ---
 
-## 🖥️ KROK 3: Instalacja (Tryb Konsoli)
+##  KROK 3: Instalacja (Tryb Konsoli)
 **UWAGA:** Sterownika nie można zainstalować, gdy widzisz pulpit. Musisz przejść do trybu tekstowego.
 
 1.  Naciśnij na klawiaturze: **`CTRL + ALT + F3`**.
@@ -44,7 +44,7 @@ sudo ./build_pascal_driver.sh
 
 ---
 
-## ⚙️ KROK 4: Finalizacja i Optymalizacja
+##  KROK 4: Finalizacja i Optymalizacja
 Gdy instalator skończy, musisz odświeżyć system, aby zapamiętał nowe ustawienia GSP (brak czarnego ekranu):
 
 ```bash
@@ -54,7 +54,7 @@ sudo reboot
 
 ---
 
-## ✅ KROK 5: Sprawdzenie
+## KROK 5: Sprawdzenie
 Po ponownym uruchomieniu komputera sprawdź, czy Twoja karta żyje na nowym sterowniku:
 1.  Otwórz terminal.
 2.  Wpisz: **`nvidia-smi`**
@@ -62,8 +62,8 @@ Po ponownym uruchomieniu komputera sprawdź, czy Twoja karta żyje na nowym ster
 
 ---
 
-> [!IMPORTANT]
-> ### 💎 Co zyskałeś dzięki temu projektowi?
+
+> ###  Co zyskałeś dzięki temu projektowi?
 > *   **Najnowsze biblioteki Vulkan** dla lepszej wydajności w nowych grach.
 > *   **Odblokowane Coolbits**: Możesz teraz sterować wentylatorami i podkręcać kartę w ustawieniach NVIDIA.
 > *   **Tryb Max Performance**: Karta nie będzie już niepotrzebnie zwalniać pulpitu.
