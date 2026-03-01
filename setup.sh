@@ -21,16 +21,26 @@ else
   echo "[OK] Wykryto sprzęt: $GPU_CHECK"
 fi
 
-# 3. Sprawdzanie niezbędnych narzędzi do kompilacji
+
+# 3. Sprawdzanie systemu i narzędzi
+OS_TYPE=$(grep -i ^ID= /etc/os-release | cut -d'=' -f2 | tr -d '"')
+
+echo "Wykryto system: $OS_TYPE"
+
+if [ "$OS_TYPE" == "fedora" ]; then
+    DEPENDENCIES=(gcc make dkms kernel-devel elfutils-libelf-devel)
+    INSTALL_CMD="sudo dnf install"
+else
+    DEPENDENCIES=(gcc make dkms build-essential linux-headers-$(uname -r))
+    INSTALL_CMD="sudo apt install"
+fi
+
 echo "Sprawdzanie narzędzi systemowych..."
-DEPENDENCIES=(gcc make dkms build-essential)
 for pkg in "${DEPENDENCIES[@]}"; do
-    if dpkg -l | grep -q "^ii  $pkg "; then
+    if rpm -q $pkg &> /dev/null || dpkg -l | grep -q "^ii  $pkg " &> /dev/null; then
         echo "  [+] $pkg jest zainstalowany."
     else
-        echo "  [-] BRAK $pkg. Instalacja wymagana: sudo apt install $pkg"
+        echo "  [-] BRAK $pkg. Zalecane: $INSTALL_CMD $pkg"
     fi
 done
 
-echo "------------------------------------------"
-echo "System gotowy do dalszych etapów prac."
