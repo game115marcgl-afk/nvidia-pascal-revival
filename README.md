@@ -71,8 +71,4 @@ Po ponownym uruchomieniu komputera sprawdź, czy Twoja karta żyje na nowym ster
 
 ---
 
-### Co poprawić w tej instrukcji na przyszłość?
-1.  **Gify/Screeny**: Ludzie kochają obrazki. Jeśli możesz, wrzuć na GitHub zrzut ekranu z terminala po wykonaniu `nvidia-smi`.
-2.  **Sekcja FAQ**: Dodaj sekcję "Co jeśli mam czarny ekran?", w której napiszesz o trybie ratunkowym (`apt purge nvidia*`).
 
-Czy ta instrukcja jest dla Ciebie wystarczająco czytelna, czy coś jeszcze doprecyzować?
