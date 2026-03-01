@@ -1,108 +1,78 @@
 
-# NVIDIA Pascal Revival (Series 590+)
-Przedłużamy życie legendarnym kartom z serii GTX 10 (Pascal) na systemie Linux.
-Cel projektu
-NVIDIA oficjalnie kończy wsparcie "Game Ready" dla architektury Pascal wraz z gałęzią sterowników 590. Ten projekt ma na celu adaptację najnowszych sterowników dla starszych GPU, optymalizację ich pod kątem nowoczesnych monitorów oraz odblokowanie ukrytych funkcji zwiększających wydajność.
-Kluczowe funkcje (Marcel's Optimizer):
-Wsparcie 240Hz+: Optymalizacja synchronizacji dla monitorów o wysokim odświeżeniu.
-Auto-Coolbits: Automatyczne odblokowanie kontroli wentylatorów i overclockingu w Panelu NVIDIA.
-Maximum Performance: Wymuszenie agresywnego trybu PowerMizer (zapobieganie spadkom taktowania).
-GSP Fix: Skrypt automatycznie wyłącza GSP Firmware, który nie jest wspierany przez serię 10xx, a który powoduje błędy w nowych sterownikach.
 
+# 🚀 NVIDIA PASCAL REVIVAL - INSTRUKCJA OBSŁUGI
+
+Ten projekt pozwala na zainstalowanie najnowszych sterowników NVIDIA (Seria 500+) na kartach graficznych **GTX z serii 10 (Pascal)**. Wszystko odbywa się automatycznie za pomocą jednego skryptu.
 
 ---
 
-# 📜 INSTRUKCJA INSTALACJI (KROK PO KROKU)
+## 🛠️ KROK 1: Przygotowanie i Pobranie
+Otwórz terminal na swoim pulpicie i wklej poniższe komendy, aby pobrać projekt:
 
-### ⚠️ ZANIM ZACZNIESZ:
-Zrób kopię zapasową systemu (np. programem **Timeshift**). Jeśli coś pójdzie nie tak, kopia pozwoli Ci wrócić do sprawnych sterowników w 5 minut.
-
----
-
-## 1️⃣ ETAP: Przygotowanie systemu
-Wklej te komendy do terminala, aby zainstalować niezbędne narzędzia:
-
-```bash
-sudo apt update
-sudo apt install build-essential dkms git wget -y
-```
-
-Następnie pobierz pliki projektu:
 ```bash
 git clone https://github.com/game115marcgl-afk/nvidia-pascal-revival
 cd nvidia-pascal-revival
-chmod +x *.sh
+chmod +x build_pascal_driver.sh
 ```
 
 ---
 
-## 2️⃣ ETAP: Pobranie i wypakowanie sterownika
-Pobieramy bazę sterownika (wersja 570), którą przerobimy na wersję dla Twojego Pascala:
+## 🏗️ KROK 2: Budowanie Twojego Sterownika
+Teraz uruchomimy kreatora, który wykryje Twoją kartę, pobierze sterownik od Nvidii i "wstrzyknie" do niego wsparcie dla Pascala oraz optymalizacje wydajności.
 
+**Uruchom to polecenie:**
 ```bash
-wget https://us.download.nvidia.com/XFree86/Linux-x86_64/570.124.04/NVIDIA-Linux-x86_64-570.124.04.run
-chmod +x NVIDIA-Linux-x86_64-570.124.04.run
-./NVIDIA-Linux-x86_64-570.124.04.run -x
+sudo ./build_pascal_driver.sh
 ```
+*Skrypt skończy pracę, gdy zobaczysz napis "PROCES ZAKOŃCZONY SUKCESEM".*
 
 ---
 
-## 3️⃣ ETAP: Modyfikacja (Patchowanie)
-Teraz uruchamiamy mój skrypt, który dopisze Twoją kartę do listy wspieranych urządzeń:
+## 🖥️ KROK 3: Instalacja (Tryb Konsoli)
+**UWAGA:** Sterownika nie można zainstalować, gdy widzisz pulpit. Musisz przejść do trybu tekstowego.
+
+1.  Naciśnij na klawiaturze: **`CTRL + ALT + F3`**.
+2.  Zaloguj się (podaj login i naciśnij Enter, potem hasło i Enter).
+3.  **Wyłącz pulpit** (komenda zależy od Twojego systemu):
+    *   *Linux Mint / Ubuntu:* `sudo service lightdm stop`
+    *   *Pop!_OS / Debian:* `sudo service gdm stop`
+4.  **Uruchom instalator**, który przed chwilą stworzyliśmy:
+    ```bash
+    sudo ./NVIDIA-Pascal-Revival-Source/nvidia-installer
+    ```
+5.  Podczas instalacji wybieraj zawsze **YES** (szczególnie przy pytaniu o DKMS i 32-bit libraries).
+
+---
+
+## ⚙️ KROK 4: Finalizacja i Optymalizacja
+Gdy instalator skończy, musisz odświeżyć system, aby zapamiętał nowe ustawienia GSP (brak czarnego ekranu):
 
 ```bash
-sudo ./patch_nvidia.sh
-```
-
----
-
-## 4️⃣ ETAP: Instalacja (Wymaga wyłączenia pulpitu)
-**To jest najtrudniejszy krok. Przeczytaj go do końca zanim zaczniesz!**
-
-1. Naciśnij klawisze: **`CTRL + ALT + F3`** (pulpit zniknie, zobaczysz tekstową konsolę).
-2. Zaloguj się (wpisz swój login i naciśnij Enter, potem hasło i Enter).
-3. Wpisz komendę wyłączającą grafikę:
-   ```bash
-   sudo service lightdm stop
-   ```
-4. Wejdź do folderu ze sterownikiem i go zainstaluj:
-   ```bash
-   cd NVIDIA-Linux-x86_64-570.124.04
-   sudo ./nvidia-installer --no-cc-version-check
-   ```
-5. Podczas instalacji wybieraj **YES** (szczególnie przy pytaniu o DKMS).
-
----
-
-## 5️⃣ ETAP: Krytyczna poprawka (BEZ TEGO SYSTEM NIE WSTanie)
-Karty Pascal (seria 10) nie obsługują nowej funkcji GSP. Musisz ją wyłączyć przed restartem! 
-
-**Będąc nadal w czarnej konsoli, wpisz:**
-
-```bash
-echo "options nvidia NVreg_EnableGpuFirmware=0" | sudo tee /etc/modprobe.d/nvidia-gsp.conf
 sudo update-initramfs -u
-```
-
----
-
-## 6️⃣ ETAP: Finał
-Teraz możesz bezpiecznie zrestartować komputer:
-
-```bash
 sudo reboot
 ```
 
-Po ponownym uruchomieniu sprawdź, czy wszystko działa, wpisując w terminalu:
-**`nvidia-smi`**
+---
+
+## ✅ KROK 5: Sprawdzenie
+Po ponownym uruchomieniu komputera sprawdź, czy Twoja karta żyje na nowym sterowniku:
+1.  Otwórz terminal.
+2.  Wpisz: **`nvidia-smi`**
+3.  Powinieneś zobaczyć swoją kartę (np. GTX 1050) oraz wersję sterownika 570/590!
 
 ---
 
-### 💡 CO ZROBIĆ, GDYBY BYŁ CZARNY EKRAN?
-Jeśli po restarcie nie widzisz pulpitu:
-1. Naciśnij **`CTRL + ALT + F3`**.
-2. Zaloguj się.
-3. Wpisz: `sudo apt remove --purge nvidia*` – to usunie sterownik i pozwoli Ci wrócić do pulpitu, aby spróbować ponownie.
+> [!IMPORTANT]
+> ### 💎 Co zyskałeś dzięki temu projektowi?
+> *   **Najnowsze biblioteki Vulkan** dla lepszej wydajności w nowych grach.
+> *   **Odblokowane Coolbits**: Możesz teraz sterować wentylatorami i podkręcać kartę w ustawieniach NVIDIA.
+> *   **Tryb Max Performance**: Karta nie będzie już niepotrzebnie zwalniać pulpitu.
+> *   **Brak błędu GSP**: Skrypt automatycznie naprawił problem czarnego ekranu, który występuje w nowych sterownikach na starych kartach.
 
 ---
-*Instrukcja stworzona dla projektu: **NVIDIA Pascal Revival***
+
+### Co poprawić w tej instrukcji na przyszłość?
+1.  **Gify/Screeny**: Ludzie kochają obrazki. Jeśli możesz, wrzuć na GitHub zrzut ekranu z terminala po wykonaniu `nvidia-smi`.
+2.  **Sekcja FAQ**: Dodaj sekcję "Co jeśli mam czarny ekran?", w której napiszesz o trybie ratunkowym (`apt purge nvidia*`).
+
+Czy ta instrukcja jest dla Ciebie wystarczająco czytelna, czy coś jeszcze doprecyzować?
